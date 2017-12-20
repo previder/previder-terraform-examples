@@ -1,0 +1,17 @@
+---
+# This playbook installs and enables IIS on Windows hosts
+
+- name: Install IIS
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Wait for host
+      wait_for_connection:
+          timeout: 900
+    - name: Install IIS
+      win_feature:
+        name: "Web-Server"
+        state: present
+        restart: yes
+        include_sub_features: yes
+        include_management_tools: yes
